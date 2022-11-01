@@ -12,6 +12,9 @@ module.exports = {
             colors: {
                 'main': '#ebebeb',
             },
+            width: {
+                '128': '32rem',
+            }
         },
     },
     plugins: [],
