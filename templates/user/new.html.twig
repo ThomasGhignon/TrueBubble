@@ -1,11 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
-
-    {{ include('user/_form.html.twig') }}
-
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <div class="md:container md:mx-auto h-screen flex items-center justify-center">
+        <div class="w-screen max-w-md">
+            <h1 class="mb-10 flex items-center text-5xl font-extrabold dark:text-white">TrueBubble<span
+                        class="bg-blue-100 text-blue-800 text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">PRO</span>
+            </h1>
+            {{ form_start(form) }}
+            <div class="mb-6">
+                <label for="pseudo"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pseudo</label>
+                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light','type': 'text','id': 'pseudo', 'required':' '}}) }}
+            </div>
+            <div class="mb-6">
+                <label for="email"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                {{ form_widget(form.email, {'attr': {'placeholder':'name@gmail.com','class': 'form-control shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light','type': 'email','id': 'email', 'required':' '}}) }}
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
+                {{ form_widget(form.password, {'attr': {'class': 'form-control shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light','type': 'password','id': 'password', 'required':' '}}) }}
+            </div>
+            <div class="mb-6">
+                <label for="repeat-password"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password
+                    confirmation</label>
+                <input type="password" id="repeat-password"
+                       class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                       required="">
+            </div>
+            <div class="flex items-start mb-6">
+                <div class="flex items-center h-5">
+                    {{ form_widget(form.agreeTerms, {'attr': {'class': 'form-control w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800','type': 'checkbox','id': 'terms', 'value': ' ', 'required':' '}}) }}
+                </div>
+                <label for="terms" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with
+                    the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and
+                        conditions</a></label>
+            </div>
+            <button type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Register new account
+            </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

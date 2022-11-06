@@ -1,5 +1,7 @@
 import * as Matter from 'matter-js';
 
+if(document.getElementById('home'))
+
 // module aliases
 var Engine = Matter.Engine,
     Render = Matter.Render,
