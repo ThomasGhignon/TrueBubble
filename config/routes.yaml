@@ -2,12 +2,40 @@ app_home:
     path: /
     controller: App\Controller\HomeController::index
 
-app_user_signup:
-    path: /signup
-    controller: App\Controller\UserController::new
 app_login:
     path: /login
     controller: App\Controller\AuthController::login
 app_logout:
     path: /logout
     controller: App\Controller\AuthController::logout
+
+app_user_signup:
+    path: /signup
+    controller: App\Controller\UserController::new
+app_user_show:
+    path: /user/{id}
+    controller: App\Controller\UserController::show
+app_user_edit:
+    path: /user/edit/{id}
+    controller: App\Controller\UserController::edit
+app_user_delete:
+    path: /user/delete/{id}
+    controller: App\Controller\UserController::delete
+    methods: [POST]
+
+app_post_new:
+    path: /post/new
+    controller: App\Controller\PostController::new
+    methods: [GET, POST]
+app_post_show:
+    path: /post/{id}
+    controller: App\Controller\PostController::show
+    methods: [GET]
+app_post_edit:
+    path: /post/edit/{id}
+    controller: App\Controller\PostController::edit
+    methods: [GET, POST]
+app_post_delete:
+    path: /post/delete/{id}
+    controller: App\Controller\PostController::delete
+    methods: [POST]

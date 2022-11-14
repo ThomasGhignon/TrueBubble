@@ -19,87 +19,11 @@
         </div>
 {#        <div data-object="data-object='4579|https//#|Le titre'"></div>#}
         <ul class="bubbles">
-            <li class="bubble bg-new"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-new"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-new"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-true"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-true"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-true"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-fake"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-fake"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-fake"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-hype"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li><li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-hype"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-hype"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble bg-hype"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li><li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li><li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
-            <li class="bubble"><a href="#">
-                    <h2>Le titre</h2>
-                </a></li>
+            {% for post in posts %}
+                <li class="bubble bg-new"><a href="{{ path('app_post_show', {id: post.id}) }}">
+                        <h2>{{ post.title }}</h2>
+                    </a></li>
+            {% endfor %}
         </ul>
     </section>
 {% endblock %}
