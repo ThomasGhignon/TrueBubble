@@ -48,9 +48,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 400, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PostRelevance::class, orphanRemoval: true)]
+    private Collection $postRelevances;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->postRelevances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +213,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostRelevance>
+     */
+    public function getPostRelevances(): Collection
+    {
+        return $this->postRelevances;
+    }
+
+    public function addPostRelevance(PostRelevance $postRelevance): self
+    {
+        if (!$this->postRelevances->contains($postRelevance)) {
+            $this->postRelevances->add($postRelevance);
+            $postRelevance->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostRelevance(PostRelevance $postRelevance): self
+    {
+        if ($this->postRelevances->removeElement($postRelevance)) {
+            // set the owning side to null (unless already changed)
+            if ($postRelevance->getUser() === $this) {
+                $postRelevance->setUser(null);
+            }
+        }
 
         return $this;
     }

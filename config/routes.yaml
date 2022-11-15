@@ -39,3 +39,12 @@ app_post_delete:
     path: /post/delete/{id}
     controller: App\Controller\PostController::delete
     methods: [POST]
+
+#app_relevance_get:
+#    path: /post/{id}/relevance
+#    controller: App\Controller\PostController::relevance
+#    methods: [GET]
+app_relevance_new:
+    path: /post/{id}/relevance
+    controller: App\Controller\PostRelevanceController::new
+    methods: [POST]

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,6 +34,14 @@ class Post
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
+
+    #[ORM\OneToMany(mappedBy: 'Post', targetEntity: PostRelevance::class, orphanRemoval: true)]
+    private Collection $postRelevances;
+
+    public function __construct()
+    {
+        $this->postRelevances = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +116,36 @@ class Post
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostRelevance>
+     */
+    public function getPostRelevances(): Collection
+    {
+        return $this->postRelevances;
+    }
+
+    public function addPostRelevance(PostRelevance $postRelevance): self
+    {
+        if (!$this->postRelevances->contains($postRelevance)) {
+            $this->postRelevances->add($postRelevance);
+            $postRelevance->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostRelevance(PostRelevance $postRelevance): self
+    {
+        if ($this->postRelevances->removeElement($postRelevance)) {
+            // set the owning side to null (unless already changed)
+            if ($postRelevance->getPost() === $this) {
+                $postRelevance->setPost(null);
+            }
+        }
 
         return $this;
     }

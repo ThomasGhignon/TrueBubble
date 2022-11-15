@@ -17,6 +17,20 @@
                             </div>
                         </div>
                     </address>
+                    <div class="-translate-x-28 fixed flex flex-col justify-center items-center">
+                        {% if app.user %}
+                            <svg onclick="newPostRelevance({{ post.id }}, true)" class="mb-2 cursor-pointer w-10 stroke-main-gray" className="w-6 h-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" /></svg>
+                        {% endif %}
+                        <span class="flex items-center justify-between text-white bg-blue-700 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+{#                            {{ post.postRelevance }}#}
+                            0
+                            <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" /></svg>
+{#                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>#}
+                        </span>
+                        {% if app.user %}
+                            <svg onclick="newPostRelevance({{ post.id }}, false)" class="mt-2 cursor-pointer w-10 stroke-main-gray" className="w-6 h-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" /></svg>
+                        {% endif %}
+                    </div>
                     {% if post.image %}
                         <div class="pt-52 pb-32 mb-5" style="background-image: url('{{ post.image }}')"></div>
                         <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">Best practices for successful prototypes</h1>
@@ -30,4 +44,37 @@
             </article>
         </div>
     </main>
+    <script>
+        function newPostRelevance(postId, relevance) {
+            // fetch('/post/' + postId + '/relevance', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     data : {'postId':postId},
+            //     body: JSON.stringify({
+            //         postId: postId,
+            //         isRelevant: isRelevant
+            //     })
+            // })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log(data);
+            //     });
+
+            fetch('/post/' + postId + '/relevance', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    post_id: postId,
+                    relevance: relevance
+                })
+            })
+                .then(response => response.json())
+                .then(response => console.log(JSON.stringify(response)))
+        }
+    </script>
 {% endblock %}

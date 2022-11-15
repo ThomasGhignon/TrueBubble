@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\PostRelevance;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,6 +45,7 @@ class PostController extends AbstractController
 
     public function show(Post $post): Response
     {
+        //dd($post);
         return $this->render('post/show.html.twig', [
             'post' => $post,
         ]);
