@@ -45,9 +45,14 @@ class PostController extends AbstractController
 
     public function show(Post $post): Response
     {
-        //dd($post);
+        $total = 0;
+        foreach ($post->getPostRelevances() as $relevance) {
+            $total += $relevance->isRelevance() ? 1 : -1;
+        }
+
         return $this->render('post/show.html.twig', [
             'post' => $post,
+            'relevance' => $total,
         ]);
     }
 
