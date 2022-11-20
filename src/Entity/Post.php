@@ -38,6 +38,9 @@ class Post
     #[ORM\OneToMany(mappedBy: 'Post', targetEntity: PostRelevance::class, orphanRemoval: true)]
     private Collection $postRelevances;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $likes = null;
+
     public function __construct()
     {
         $this->postRelevances = new ArrayCollection();
@@ -146,6 +149,18 @@ class Post
                 $postRelevance->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?int $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }

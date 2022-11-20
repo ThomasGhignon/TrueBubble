@@ -17,10 +17,9 @@
                 </div>
             </div>
         </div>
-{#        <div data-object="data-object='4579|https//#|Le titre'"></div>#}
         <ul class="bubbles">
             {% for post in posts %}
-                <li class="bubble bg-new"><a href="{{ path('app_post_show', {id: post.id}) }}">
+                <li style="width: {{ post.likes < 0 ? post.likes * -1 * scale + 150 : post.likes * scale + 150 }}px; height: {{ post.likes < 0 ? post.likes * -1 * scale + 150 : post.likes * scale + 150  }}px" class="bubble {{ post.likes > 2 ? 'bg-true' : post.likes < -2 and post.likes != null ? 'bg-fake' : 'bg-new'}}"><a href="{{ path('app_post_show', {id: post.id}) }}">
                         <h2>{{ post.title }}</h2>
                     </a></li>
             {% endfor %}

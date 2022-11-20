@@ -63,11 +63,13 @@ class UserController extends AbstractController
     public function show(User $user): Response
     {
         $post = $user->getPosts();
+        $createAt = $user->getCreateAt()->format('Y F d');
 
 
         return $this->render('user/show.html.twig', [
             'posts' => $post,
             'user' => $user,
+            'createAt' => $createAt,
         ]);
     }
 

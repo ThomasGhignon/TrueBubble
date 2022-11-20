@@ -2,6 +2,10 @@
 
 {% block title %}Login{% endblock %}
 
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
     <form method="post">
         {% if app.user %}

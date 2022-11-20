@@ -2,6 +2,10 @@
 
 {% block title %}{{ user.pseudo }}{% endblock %}
 
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
 
 <div class="md:container md:mx-auto h-screen flex justify-center">
@@ -12,7 +16,7 @@
                     <img class="w-20 h-20 mr-2 rounded-full" src="https://placeimg.com/200/200/any" alt="">
                     <div class="font-medium dark:text-white">
                         <div>{{ user.pseudo }}</div>
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Joined in december 23</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Joined in {{ createAt }}</div>
                     </div>
                 </div>
                 <div>

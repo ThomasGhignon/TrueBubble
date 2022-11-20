@@ -19,6 +19,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+
         $curl = curl_init();
 
         curl_setopt_array($curl, [
@@ -91,7 +92,10 @@ class AppFixtures extends Fixture
                     $postRelevance = new PostRelevance();
                     $postRelevance->setUser($user);
                     $postRelevance->setPost($post);
-                    $postRelevance->setRelevance(rand(0, 1));
+                    $relevance_type = rand(0, 1);
+                    $postRelevance->setRelevance($relevance_type);
+                    //increase or decrease the likes field of the post with $relevance_type
+                    $relevance_type === 1 ? $post->setLikes($post->getLikes() + 1) : $post->setLikes($post->getLikes() + (-1));
                     $postRelevance->setCreateAt(new \DateTime());
                     $manager->persist($postRelevance);
                 }
@@ -106,16 +110,6 @@ class AppFixtures extends Fixture
         $user->setCreateAt(new \DateTime());
         $user->setImage('https://picsum.photos/200');
         $manager->persist($user);
-
-        for ( $i = 0; $i < 2; $i++ ) {
-            $post = new post();
-            $post->setTitle('C# is the best language ?');
-            $post->setContent("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
-            $post->setAuthor($user);
-            $post->setCreateAt(new \DateTime());
-            $post->setImage('https://picsum.photos/1080/540');
-            $manager->persist($post);
-        }
 
         $manager->flush();
     }
