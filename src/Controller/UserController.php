@@ -77,14 +77,6 @@ class UserController extends AbstractController
 
     public function edit($id, Request $request, ManagerRegistry $doctrine, User $user, UserRepository $userRepository): Response
     {
-//        $form = $this->createForm(UserType::class, $user);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $userRepository->save($user, true);
-//
-//            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-//        }
 
         $user = $doctrine->getRepository(User::class)->find($id);
 

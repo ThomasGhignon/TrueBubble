@@ -11,7 +11,7 @@
         <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
             <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                 <header class="mb-4 lg:mb-6 not-format">
-                    <address class="flex items-center mb-6 not-italic">
+                    <address class="flex items-center mb-6 not-italic justify-between">
                         <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                             <img class="mr-4 w-16 h-16 rounded-full" src="{{ post.author.image ? post.author.image : 'https://flowbite.com/docs/images/people/profile-picture-2.jpg' }}" alt="Jese Leos">
                             <div>
@@ -20,13 +20,19 @@
                                 <p class="text-base font-light text-gray-500 dark:text-gray-400"><time pubdate datetime="2022-02-08" title="February 8th, 2022">{{ create_at }}</time></p>
                             </div>
                         </div>
+                        <div>
+                            {% if app.user.id == author.id %}
+                                <a type="button" href="{{ path('app_post_delete', {id: post.id}) }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Delete</a>
+                                <a type="button" href="{{ path('app_post_edit', {id: post.id}) }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Edit</a>
+                            {% endif %}
+                        </div>
                     </address>
                     <div class="-translate-x-28 fixed flex flex-col justify-center items-center">
                         {% if app.user %}
                             <svg id="positiveRelevanceInput" onclick="newPostRelevance({{ post.id }}, true, 'positiveRelevanceInput')" class="mb-2 cursor-pointer w-10 stroke-main-gray" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" /></svg>
                         {% endif %}
                         <span class="relevanceTotal flex items-center justify-between text-white {{ post.likes == 0 ? 'bg-blue-700' : post.likes > 0 ? 'bg-green-500' : 'bg-red-600' }} bg-blue-700 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <span>{{ post.likes }}</span>
+                            <span>{{ post.likes ? post.likes : 0 }}</span>
                             <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" /></svg>
                         </span>
                         {% if app.user %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PostRelevance;
 use App\Repository\PostRelevanceRepository;
 use App\Repository\PostRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use JetBrains\PhpStorm\NoReturn;
@@ -13,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PostRelevanceController extends AbstractController
 {
 
-    #[NoReturn] public function new(Request $request, PostRelevanceRepository $postRelevanceRepository, PostRepository $postRepository): JsonResponse
+    #[NoReturn] public function new(Request $request,ManagerRegistry $doctrine, PostRelevanceRepository $postRelevanceRepository, PostRepository $postRepository): JsonResponse
     {
         $data = json_decode($request->getContent());
         $post = $postRepository->find($data->post_id);
@@ -21,19 +22,21 @@ class PostRelevanceController extends AbstractController
 
         if (!$this->getUser()) throw $this->createAccessDeniedException();
 
-        if ($post->getAuthor() === $this->getUser())
+        if ($post->getAuthor() === $this->getUser()) {
             return $this->json([
                 'message' => 'You\'re the author of this post',
                 'code' => 400,
             ], 400);
+        }
 
-        if ($post->getPostRelevances()->count() > 0) {
 
-            $postRelevance = $post->getPostRelevances()->filter(function (PostRelevance $postRelevance) {
-                return $postRelevance->getUser() === $this->getUser();
-            })->first();
+        $postRelevance = $post->getPostRelevances()->filter(function (PostRelevance $postRelevance) {
+            return $postRelevance->getUser() === $this->getUser();
+        });
 
-            if ($postRelevance && $postRelevance->isRelevance() !== $data->relevance) {
+
+        if ($postRelevance->count() > 0) {
+            if ($postRelevance !== $data->relevance) {
                 $postRelevance->setRelevance($data->relevance);
                 $postRelevanceRepository->save($postRelevance, true);
                 $data->relevance === 1 ? $post->setLikes($post->getLikes() + 1) : $post->setLikes($post->getLikes() + (-1));

@@ -44,26 +44,6 @@ class EditUserFormType extends AbstractType
                 'attr' => ['class' =>'form-control'],
             ])
         ;
-
-        //if user is administrator, he can change role of user
-        if (in_array('ROLE_ADMIN', $this->security->getUser()->getRoles())) {
-            $builder
-                ->add('roles', ChoiceType::class, [
-                    'choices' => [
-                        'Utilisateur' => 'ROLE_USER',
-                        'Modérateur' => 'ROLE_EDITOR',
-                        'Administrateur' => 'ROLE_ADMIN'
-                    ],
-                    'multiple' => true,
-                    'expanded' => true,
-                    'label' => 'Rôles',
-                ])
-            ;
-        }
-        $builder
-            ->add('valider', SubmitType::class, [
-                'attr' => ['class' =>'btn btn-primary bg-indigo-600 hover:bg-indigo-700'],
-            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
