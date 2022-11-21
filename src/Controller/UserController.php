@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditUserFormType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,17 +75,34 @@ class UserController extends AbstractController
         ]);
     }
 
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit($id, Request $request, ManagerRegistry $doctrine, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+//        $form = $this->createForm(UserType::class, $user);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $userRepository->save($user, true);
+//
+//            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+//        }
+
+        $user = $doctrine->getRepository(User::class)->find($id);
+
+        if ($user !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(EditUserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($user, true);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('message', 'User updated successfully');
+            return $this->redirectToRoute('app_user_show', ['id' => $id]);
         }
-
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,

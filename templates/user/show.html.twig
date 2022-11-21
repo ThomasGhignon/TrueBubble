@@ -88,7 +88,7 @@
 {#                    <span class="sr-only">Loading...</span>#}
 {#                </div>#}
             {% endfor %}
-            {% if app.user.id == user.id %}
+            {% if app.user.id == user.id and posts is not empty %}
                 <div class="max-w-sm bg-white bg-transparent rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 flex items-center justify-center">
                     <div class="p-5">
                         <a href="#">
